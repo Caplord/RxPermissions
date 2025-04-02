@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply from: 'jitpack.gradle'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -11,6 +11,7 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+        versionName rootProject.ext.libraryVersion
     }
     buildTypes {
         release {
