@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 
 android {
+    namespace "com.github.tbruyelle.rxpermissions"
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
@@ -23,6 +24,11 @@ android {
     testOptions.unitTests.all {
         // unitTests.returnDefaultValues = true
         // Always show the result of every unit test, even if it passes.
+        it.jvmArgs += [
+                '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+                '--add-opens', 'java.base/java.lang.reflect=ALL-UNNAMED',
+                '--add-opens', 'java.base/java.io=ALL-UNNAMED'
+            ]
         testLogging {
             events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
         }
@@ -41,6 +47,35 @@ dependencies {
     testImplementation rootProject.ext.khronosOpenGLApi
 }
 
-// Commented to use JitPack instead of bintray
-//apply from: 'install.gradle'
-//apply from: 'bintray.gradle'
+publishing {
+    publications {
+        release(MavenPublication) {
+            afterEvaluate {
+                from components.release
+            }
+
+            groupId = 'com.github.tbruyelle'
+            artifactId = 'RxPermissions'
+            version = android.defaultConfig.versionName
+
+            pom {
+                name = 'RxPermissions'
+                description = 'A wrapper for Android 6.0 permissions'
+                url = 'https://github.com/tbruyelle/RxPermissions'
+                licenses {
+                    license {
+                        name = 'The Apache Software License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'tbruyelle'
+                        name = 'Thomas Bruyelle'
+                        email = 'thomas.bruyelle@gmail.com'
+                    }
+                }
+            }
+        }
+    }
+}
