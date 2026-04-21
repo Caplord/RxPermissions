@@ -50,7 +50,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Build.VERSION_CODES.M)
+@Config(sdk = Build.VERSION_CODES.TIRAMISU)
 public class RxPermissionsTest {
 
     private FragmentActivity mActivity;
