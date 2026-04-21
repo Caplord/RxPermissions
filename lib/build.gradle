@@ -6,6 +6,8 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
+        // Compile with Java 17 for Android AGP compatibility
+        // but use Java 21 toolchain for the build environment
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
@@ -34,6 +36,15 @@ android {
         }
     }
 }
+
+// TODO: Configure Java 21 toolchain once AGP has better Java 21 support
+// Currently AGP 8.1.0 has jdkImage transform issues with Java 21
+// Foojay auto-provisioning is enabled in settings.gradle for future use
+// java {
+//     toolchain {
+//         languageVersion = JavaLanguageVersion.of(21)
+//     }
+// }
 
 dependencies {
     implementation(rootProject.ext.rxJava) {

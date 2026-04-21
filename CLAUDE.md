@@ -146,17 +146,21 @@ Maven publication is configured in `lib/build.gradle` for distribution.
 
 ## Custom Fork (caplord)
 
-A custom fork is maintained at `github.com/caplord/RxPermissions` with modernized build configuration:
+A custom fork is maintained at `github.com/caplord/RxPermissions` with modernized build configuration aligned with consuming projects.
 
-**Version 1.0.0-java17-modern:**
-- Gradle 8.10.2 (from 7.6.4)
-- Android Gradle Plugin 8.1.0 (from 7.0.4)
-- compileSdkVersion 35 (from 29)
-- minSdkVersion 21 (from 14)
-- Java 17 source/target compatibility
-- Updated AndroidX libraries (fragment 1.6.2, annotation 1.7.1, appcompat 1.7.1)
-- Fixed Kotlin stdlib duplicate class errors
-- Proper manifest configuration for Android 12+
+**Latest Version 1.0.0-java17-aligned:**
+- **Gradle**: 8.10.2 (from 7.6.4)
+- **Android Gradle Plugin**: 8.1.0 (from 7.0.4)
+- **compileSdkVersion**: 36 (from 29)
+- **minSdkVersion**: 26 (from 14)
+- **targetSdkVersion**: 36
+- **Java**: 17 source/target compatibility
+- **AndroidX**: fragment 1.6.2, annotation 1.7.1, appcompat 1.7.1
+- **Fixes**: Kotlin stdlib duplicate class errors, manifest configuration for Android 12+
+
+**Previous Versions:**
+- `1.0.0-java17-modern`: Modernized build with minSdk 21, compileSdk 35
+- `1.0.0-java17-compat`: Initial semantic version of testBuildJitPack
 
 **Reason:** Official 0.12 stable release is not compatible with:
 - Java 17 compilation
@@ -164,6 +168,6 @@ A custom fork is maintained at `github.com/caplord/RxPermissions` with modernize
 - Mockito 5.11.0
 - Latest Android SDK requirements
 
-**Used by:** openfleet_android project
+**Used by:** openfleet_android project (and others)
 
-This fork provides a temporary modern build solution. Should be retired once the official repository releases a stable version with contemporary Android tooling support.
+This fork provides a temporary modern build solution. Should be retired once the official repository releases a stable version with contemporary Android tooling support and SDK compatibility.

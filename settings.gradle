@@ -1,3 +1,17 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+// Auto-download JDK 21 via foojay resolver (Gradle 8.1+)
+// See: https://plugins.gradle.org/plugin/org.gradle.toolchains.foojay-resolver-convention
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+}
+
 include 'lib'
 project(':lib').name = 'rxpermissions'
 include 'sample'
