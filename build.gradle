@@ -16,8 +16,8 @@ allprojects {
 }
 
 ext {
-    minSdkVersion = 21
-    compileSdkVersion = 35
+    minSdkVersion = 26
+    compileSdkVersion = 36
     targetSdkVersion = compileSdkVersion
 
     rxJava = 'io.reactivex.rxjava3:rxjava:3.0.4'

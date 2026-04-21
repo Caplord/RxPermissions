@@ -146,10 +146,24 @@ Maven publication is configured in `lib/build.gradle` for distribution.
 
 ## Custom Fork (caplord)
 
-A custom fork is maintained at `github.com/caplord/RxPermissions` with additional compatibility fixes:
-- **Version**: `1.0.0-java17-compat` tag
-- **Fixes included**: Java 17, Robolectric 4.10.3, and Mockito 5.11.0 compatibility
-- **Reason**: Official 0.12 stable release is not compatible with these versions
-- **Used by**: openfleet_android project
+A custom fork is maintained at `github.com/caplord/RxPermissions` with modernized build configuration:
 
-This fork is temporary and should be retired once the official repository releases a stable version with these compatibility fixes.
+**Version 1.0.0-java17-modern:**
+- Gradle 8.10.2 (from 7.6.4)
+- Android Gradle Plugin 8.1.0 (from 7.0.4)
+- compileSdkVersion 35 (from 29)
+- minSdkVersion 21 (from 14)
+- Java 17 source/target compatibility
+- Updated AndroidX libraries (fragment 1.6.2, annotation 1.7.1, appcompat 1.7.1)
+- Fixed Kotlin stdlib duplicate class errors
+- Proper manifest configuration for Android 12+
+
+**Reason:** Official 0.12 stable release is not compatible with:
+- Java 17 compilation
+- Robolectric 4.10.3
+- Mockito 5.11.0
+- Latest Android SDK requirements
+
+**Used by:** openfleet_android project
+
+This fork provides a temporary modern build solution. Should be retired once the official repository releases a stable version with contemporary Android tooling support.
