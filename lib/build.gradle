@@ -6,8 +6,8 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
@@ -36,46 +36,34 @@ android {
 }
 
 dependencies {
-    implementation rootProject.ext.rxJava
-    implementation rootProject.ext.androidXFragment
-    implementation rootProject.ext.androidXAnnotation
-    implementation rootProject.ext.androidXAppcompat
+    implementation(rootProject.ext.rxJava) {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+    }
+    implementation(rootProject.ext.androidXFragment) {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+    }
+    implementation(rootProject.ext.androidXAnnotation) {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+    }
+    implementation(rootProject.ext.androidXAppcompat) {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+    }
 
     testImplementation 'junit:junit:4.13'
-    testImplementation rootProject.ext.mockito
-    testImplementation rootProject.ext.robolectric
+    testImplementation(rootProject.ext.mockito) {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+    }
+    testImplementation(rootProject.ext.robolectric) {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+    }
     testImplementation rootProject.ext.khronosOpenGLApi
 }
 
-publishing {
-    publications {
-        release(MavenPublication) {
-            afterEvaluate {
-                from components.release
-            }
-
-            groupId = 'com.github.tbruyelle'
-            artifactId = 'RxPermissions'
-            version = android.defaultConfig.versionName
-
-            pom {
-                name = 'RxPermissions'
-                description = 'A wrapper for Android 6.0 permissions'
-                url = 'https://github.com/tbruyelle/RxPermissions'
-                licenses {
-                    license {
-                        name = 'The Apache Software License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'tbruyelle'
-                        name = 'Thomas Bruyelle'
-                        email = 'thomas.bruyelle@gmail.com'
-                    }
-                }
-            }
-        }
-    }
-}
+// JitPack handles publishing, so explicit maven-publish is disabled for now
+// TODO: Update publishing configuration for AGP 8.0+ compatibility

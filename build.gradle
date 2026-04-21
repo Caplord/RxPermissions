@@ -4,11 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        // classpath 'com.android.tools.build:gradle:4.0.0'
-        // classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
-        // classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-        // classpath 'com.android.tools.build:gradle:7.6.4'
-        classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath 'com.android.tools.build:gradle:8.1.0'
     }
 }
 
@@ -20,17 +16,23 @@ allprojects {
 }
 
 ext {
-    minSdkVersion = 14
-    compileSdkVersion = 29
+    minSdkVersion = 21
+    compileSdkVersion = 35
     targetSdkVersion = compileSdkVersion
 
     rxJava = 'io.reactivex.rxjava3:rxjava:3.0.4'
     junit = 'junit:junit:4.13'
     mockito = 'org.mockito:mockito-core:5.11.0'
 
-    androidXFragment = 'androidx.fragment:fragment:1.2.5'
-    androidXAnnotation = 'androidx.annotation:annotation:1.1.0'
-    androidXAppcompat =  'androidx.appcompat:appcompat:1.1.0'
+    androidXFragment = 'androidx.fragment:fragment:1.6.2'
+    androidXAnnotation = 'androidx.annotation:annotation:1.7.1'
+    androidXAppcompat =  'androidx.appcompat:appcompat:1.7.1'
+
+    // Exclusions for Kotlin stdlib duplicates
+    kotlinStdlibExclusions = {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+    }
 
     robolectricVersion = '4.10.3'
     robolectric = "org.robolectric:robolectric:$robolectricVersion"
