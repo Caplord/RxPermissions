@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
@@ -22,7 +22,7 @@ public class RxPermissionsFragment extends Fragment {
 
     // Contains all the current permission requests.
     // Once granted or denied, they are removed from it.
-    private Map<String, PublishSubject<Permission>> mSubjects = new HashMap<>();
+    private Map<String, PublishSubject<Permission>> mSubjects = new ConcurrentHashMap<>();
     private boolean mLogging;
 
     public RxPermissionsFragment() {
@@ -62,7 +62,7 @@ public class RxPermissionsFragment extends Fragment {
             if (subject == null) {
                 // No subject found
                 Log.e(RxPermissions.TAG, "RxPermissions.onRequestPermissionsResult invoked but didn't find the corresponding permission request.");
-                return;
+                continue;
             }
             mSubjects.remove(permissions[i]);
             boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;

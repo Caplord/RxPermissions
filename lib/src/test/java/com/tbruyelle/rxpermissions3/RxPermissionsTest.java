@@ -648,4 +648,34 @@ public class RxPermissionsTest {
 
         assertFalse(revoked);
     }
+
+    @Test
+    @TargetApi(Build.VERSION_CODES.M)
+    public void onRequestPermissionsResult_batchWithMissingSubject_remainingPermissionsProcessed() {
+        // Arrange: subscribe to LOCATION only — CAMERA has no subject
+        TestObserver<Permission> locationObserver = mRxPermissions
+                .requestEach(Manifest.permission.ACCESS_FINE_LOCATION)
+                .test();
+
+        // Act: system returns results for both CAMERA and LOCATION
+        // CAMERA has no registered subject (simulates an unexpected callback)
+        mRxPermissions.onRequestPermissionsResult(
+                new String[]{
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                },
+                new int[]{
+                    PackageManager.PERMISSION_GRANTED,
+                    PackageManager.PERMISSION_GRANTED
+                }
+        );
+
+        // Assert: LOCATION result was received despite CAMERA having no subject
+        locationObserver.assertNoErrors();
+        locationObserver.assertComplete();
+        locationObserver.assertValue(permission ->
+                permission.name.equals(Manifest.permission.ACCESS_FINE_LOCATION)
+                && permission.granted
+        );
+    }
 }
