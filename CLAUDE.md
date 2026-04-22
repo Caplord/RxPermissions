@@ -116,7 +116,7 @@ RxPermissions is an Android library that wraps Android 6.0+ runtime permissions 
 
 - **Must be initialized in onCreate or similar**: Permission requests must be set up during initialization phases, not in `onResume` or other pausing methods, to avoid infinite loops if the app is restarted during the request
 - **Fragment vs FragmentActivity**: When using with a Fragment, pass the fragment instance (not the parent activity) to ensure proper fragment manager use
-- **Java 8+**: Project uses Java 8 syntax (lambdas) with target compatibility set to Java 1.8
+- **Java 21**: Project compiles with Java 21 bytecode (source/target compatibility set to VERSION_21). Java 21 toolchain configured via Foojay auto-provisioning (AGP 8.10.0+ supports Java 21)
 - **RxJava 3**: Library uses RxJava 3 (reactive-streams via `io.reactivex.rxjava3`)
 
 ## Testing
@@ -124,56 +124,76 @@ RxPermissions is an Android library that wraps Android 6.0+ runtime permissions 
 Unit tests use **Robolectric** for Android component simulation (no emulator required). Key test file:
 - `lib/src/test/java/com/tbruyelle/rxpermissions3/RxPermissionsTest.java`
 
-Robolectric version: 4.10.3 (configured with special JVM args in `lib/build.gradle` to handle Java 17 compatibility)
+**Robolectric Configuration:**
+- Version: 4.12.2 (supports Java 21 compilation)
+- Special JVM args in `lib/build.gradle` to handle Java 21 compatibility (--add-opens flags)
+- **Critical**: Test SDK level must match or be compatible with compileSdkVersion (36). Tests are configured with `@Config(sdk = Build.VERSION_CODES.TIRAMISU)` to ensure Robolectric's manifest parser works correctly
+- If test SDK is significantly lower than compileSdk, Robolectric's PackageParser may fail due to API incompatibilities
 
 ## Gradle Configuration
 
-- **Android Gradle Plugin**: 7.0.4
-- **Min SDK**: 14
-- **Compile SDK**: 29
-- **Target SDK**: 29
-- **Java Version**: 1.8 source/target
+**Modernized Build (caplord fork - version 1.0.1-java21+):**
+- **Gradle**: 8.14.4
+- **Android Gradle Plugin**: 8.10.0
+- **Min SDK**: 26
+- **Compile SDK**: 36
+- **Target SDK**: 36
+- **Build Tools**: 36.x.x (auto-selected by AGP)
+- **Java Version**: 21 source/target (full Java 21 bytecode compilation enabled)
+- **Kotlin stdlib exclusions**: Added to all dependencies to prevent duplicate class warnings
+- **Foojay auto-provisioning**: Enables automatic JDK 21 download via SDK manager
 - **AndroidX enabled**: `android.useAndroidX = true` in gradle.properties
+
+**Original Repository (Official - version 0.9.5):**
+Still uses older configuration (Java 8, SDK 29, AGP 7.0.4, Gradle 7.6.4). The caplord fork provides modernized build configuration for projects requiring Java 21, SDK 36, and AGP 8.10.0 compatibility.
 
 ## Publishing
 
-Library is published to JitPack. Current version structure in `build.gradle`:
-- Published group ID: `com.github.tbruyelle`
-- Artifact: `RxPermissions`
-- Version: `0.9.5` (in `libraryVersion` property)
+**Original Repository (tbruyelle/RxPermissions):**
+- Published to JitPack as `com.github.tbruyelle:RxPermissions`
+- Latest stable version: `0.9.5`
 
-Maven publication is configured in `lib/build.gradle` for distribution.
+**Modernized Fork (caplord/RxPermissions):**
+- Published to JitPack as `com.github.caplord:rxpermissions`
+- Latest version: `1.0.1-java21` (Java 21 bytecode compilation enabled)
+- Use this fork in projects requiring Java 21 compilation, SDK 36, and AGP 8.10.0+ support
+
+Maven publication is configured in `lib/build.gradle` via maven-publish plugin for JitPack distribution.
 
 ## Custom Fork (caplord)
 
 A custom fork is maintained at `github.com/caplord/RxPermissions` with modernized build configuration aligned with consuming projects.
 
-**Latest Version 1.0.0-java21-ready:**
-- **Gradle**: 8.10.2 (from 7.6.4)
-- **Android Gradle Plugin**: 8.1.0 (from 7.0.4)
-- **compileSdkVersion**: 36 (from 29)
-- **minSdkVersion**: 26 (from 14)
+**Latest Version 1.0.1-java21:**
+- **Gradle**: 8.14.4 (from 8.10.2)
+- **Android Gradle Plugin**: 8.10.0 (from 8.1.0)
+- **compileSdkVersion**: 36
+- **minSdkVersion**: 26
 - **targetSdkVersion**: 36
-- **Java Compilation**: 17 source/target (AGP compatibility)
+- **Build Tools**: 36.x.x (auto-selected by AGP)
+- **Java Compilation**: 21 source/target (full Java 21 bytecode enabled)
 - **Java 21 Toolchain**: Foojay auto-provisioning enabled
-  - JDK 21 automatically downloaded on first build
-  - Ready for full Java 21 compilation once AGP improves jdkImage support
+  - JDK 21 automatically downloaded and used for compilation
+  - Full Java 21 support with AGP 8.10.0
+- **Robolectric**: 4.12.2 (supports Java 21 compilation)
 - **AndroidX**: fragment 1.6.2, annotation 1.7.1, appcompat 1.7.1
 - **Fixes**: Kotlin stdlib duplicate class errors, manifest configuration for Android 12+
 
 **Previous Versions:**
+- `1.0.0-java21-ready`: Java 21 toolchain configured but source/target set to Java 17 (AGP 8.1.0 limitation)
 - `1.0.0-java17-aligned`: SDK-aligned version without Java 21 toolchain
 - `1.0.0-java17-modern`: Initial modernized build with minSdk 21, compileSdk 35
 - `1.0.0-java17-compat`: Initial semantic version of testBuildJitPack
 - `testBuildJitPack`: Original test build (deprecated)
 
-**Reason:** Official 0.12 stable release is not compatible with:
-- Java 17 compilation
-- Robolectric 4.10.3
-- Mockito 5.11.0
-- Latest Android SDK requirements
-- Java 21 toolchain infrastructure
+**Reason:** Official 0.9.5 stable release is not compatible with:
+- Java 17 compilation (uses Java 8)
+- Android SDK 36 compilation
+- Robolectric 4.10.3+ (Java 17+ support)
+- Mockito 5.x (Java 17+ support)
+- AGP 8.x (requires SDK 30+)
+- Java 21 compilation and toolchain
 
 **Used by:** openfleet_android project (and others)
 
-This fork provides a temporary modern build solution with Java 21 toolchain parity to the main project. Should be retired once the official repository releases a stable version with contemporary Android tooling support, Java 21, and SDK compatibility.
+This fork provides a modern build solution with full Java 21 compilation support and alignment with Android 15+ SDK requirements. Should be retired once the official repository releases a stable version with contemporary Android tooling support, Java 21, SDK 36, and AGP 8.10.0+ compatibility.

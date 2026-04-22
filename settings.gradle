@@ -6,10 +6,10 @@ pluginManagement {
     }
 }
 
-// Auto-download JDK 21 via foojay resolver (Gradle 8.1+)
+// Auto-download JDK 21 via foojay resolver
 // See: https://plugins.gradle.org/plugin/org.gradle.toolchains.foojay-resolver-convention
 plugins {
-    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.9.0'
 }
 
 include 'lib'

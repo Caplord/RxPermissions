@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.0'
+        classpath 'com.android.tools.build:gradle:8.10.0'
     }
 }
 
@@ -34,7 +34,7 @@ ext {
         exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
     }
 
-    robolectricVersion = '4.10.3'
+    robolectricVersion = '4.12.2'
     robolectric = "org.robolectric:robolectric:$robolectricVersion"
     robolectricShadowsSupport = "org.robolectric:shadows-support-v4:$robolectricVersion"
     // Workaround for https://github.com/robolectric/robolectric/issues/1932
