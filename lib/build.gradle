@@ -71,5 +71,44 @@ dependencies {
     testImplementation rootProject.ext.khronosOpenGLApi
 }
 
-// JitPack handles publishing, so explicit maven-publish is disabled for now
-// TODO: Update publishing configuration for AGP 8.0+ compatibility
+afterEvaluate {
+    publishing {
+        repositories {
+            mavenLocal()
+        }
+        publications {
+            release(MavenPublication) {
+                groupId = project.findProperty('group') ?: rootProject.ext.publishedGroupId
+                artifactId = rootProject.ext.artifact
+                version = project.findProperty('version') ?: rootProject.ext.libraryVersion
+
+                artifact bundleReleaseAar
+
+                pom {
+                    name = rootProject.ext.libraryName
+                    description = rootProject.ext.libraryDescription
+                    url = rootProject.ext.siteUrl
+
+                    licenses {
+                        license {
+                            name = rootProject.ext.licenseName
+                            url = rootProject.ext.licenseUrl
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = rootProject.ext.developerId
+                            name = rootProject.ext.developerName
+                            email = rootProject.ext.developerEmail
+                        }
+                    }
+                    scm {
+                        connection = rootProject.ext.gitUrl
+                        developerConnection = rootProject.ext.gitUrl
+                        url = rootProject.ext.siteUrl
+                    }
+                }
+            }
+        }
+    }
+}
