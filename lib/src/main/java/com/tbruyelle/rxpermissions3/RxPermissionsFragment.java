@@ -15,7 +15,21 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
-
+/**
+ * Headless retained Fragment that intercepts Android permission callbacks on behalf of
+ * {@link RxPermissions}.
+ *
+ * <p>It is added to the host Activity's FragmentManager under the tag {@link RxPermissions#TAG}
+ * and retained across configuration changes. Permission results are forwarded to per-permission
+ * {@link PublishSubject} instances stored in {@link #mSubjects}.
+ *
+ * <p><b>Thread safety:</b> {@link #mSubjects} uses {@link java.util.concurrent.ConcurrentHashMap}
+ * to handle concurrent reads/writes safely. All Android lifecycle callbacks (onCreate,
+ * onRequestPermissionsResult) are guaranteed to run on the main thread.
+ *
+ * <p><b>Note:</b> {@code setRetainInstance(true)} is deprecated as of AndroidX Fragment 1.3.0.
+ * A future version should migrate this to a ViewModel-based approach.
+ */
 public class RxPermissionsFragment extends Fragment {
 
     private static final int PERMISSIONS_REQUEST_CODE = 42;
@@ -54,6 +68,11 @@ public class RxPermissionsFragment extends Fragment {
         onRequestPermissionsResult(permissions, grantResults, shouldShowRequestPermissionRationale);
     }
 
+    /**
+     * Processes permission results and emits to the matching subject for each permission.
+     * If no subject is found for a given permission (unexpected callback), logs an error and
+     * continues to process remaining permissions in the batch.
+     */
     void onRequestPermissionsResult(String[] permissions, int[] grantResults, boolean[] shouldShowRequestPermissionRationale) {
         for (int i = 0, size = permissions.length; i < size; i++) {
             log("onRequestPermissionsResult  " + permissions[i]);
