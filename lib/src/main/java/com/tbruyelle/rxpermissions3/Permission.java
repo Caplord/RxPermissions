@@ -3,9 +3,6 @@ package com.tbruyelle.rxpermissions3;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.functions.BiConsumer;
-import io.reactivex.rxjava3.functions.Function;
-import io.reactivex.rxjava3.functions.Predicate;
 
 public class Permission {
     public final String name;
@@ -61,40 +58,22 @@ public class Permission {
 
     private String combineName(List<Permission> permissions) {
         return Observable.fromIterable(permissions)
-                .map(new Function<Permission, String>() {
-                    @Override
-                    public String apply(Permission permission) throws Exception {
-                        return permission.name;
-                    }
-                }).collectInto(new StringBuilder(), new BiConsumer<StringBuilder, String>() {
-                    @Override
-                    public void accept(StringBuilder s, String s2) throws Exception {
-                        if (s.length() == 0) {
-                            s.append(s2);
-                        } else {
-                            s.append(", ").append(s2);
-                        }
-                    }
+                .map(p -> p.name)
+                .collectInto(new StringBuilder(), (s, s2) -> {
+                    if (s.length() == 0) s.append(s2);
+                    else s.append(", ").append(s2);
                 }).blockingGet().toString();
     }
 
     private Boolean combineGranted(List<Permission> permissions) {
         return Observable.fromIterable(permissions)
-                .all(new Predicate<Permission>() {
-                    @Override
-                    public boolean test(Permission permission) throws Exception {
-                        return permission.granted;
-                    }
-                }).blockingGet();
+                .all(p -> p.granted)
+                .blockingGet();
     }
 
     private Boolean combineShouldShowRequestPermissionRationale(List<Permission> permissions) {
         return Observable.fromIterable(permissions)
-                .any(new Predicate<Permission>() {
-                    @Override
-                    public boolean test(Permission permission) throws Exception {
-                        return permission.shouldShowRequestPermissionRationale;
-                    }
-                }).blockingGet();
+                .any(p -> p.shouldShowRequestPermissionRationale)
+                .blockingGet();
     }
 }
