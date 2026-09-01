@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This is the `Caplord/RxPermissions` fork: a Java Android library that exposes runtime-permission requests as RxJava 3 streams. The current checked-out release is `1.0.4-java21`, modernized for Java 21, SDK 36, Gradle 8.14.4, and AGP 8.10.0. The consuming OpenFleet Android app uses the JitPack coordinate `com.github.caplord:rxpermissions:1.0.4-java21`.
+This is the `pvp-technologies/RxPermissions` fork (previously published from `Caplord/RxPermissions`): a Java Android library that exposes runtime-permission requests as RxJava 3 streams. The current checked-out release is `1.0.4-java21`, modernized for Java 21, SDK 36, Gradle 8.14.4, and AGP 8.10.0. The consuming OpenFleet Android app uses the JitPack coordinate `com.github.pvp-technologies:rxpermissions:1.0.4-java21`.
 
 ## Project Structure
 

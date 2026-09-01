@@ -1,12 +1,13 @@
 # RxPermissions
 
-[![](https://jitpack.io/v/Caplord/RxPermissions.svg)](https://jitpack.io/#Caplord/RxPermissions)
+[![](https://jitpack.io/v/pvp-technologies/RxPermissions.svg)](https://jitpack.io/#pvp-technologies/RxPermissions)
 
 This library allows the usage of RxJava with the new Android M permission model.
 
-This is the `Caplord/RxPermissions` fork of [tbruyelle/RxPermissions](https://github.com/tbruyelle/RxPermissions),
-modernized for Java 21, `compileSdk`/`targetSdk` 36, Gradle 8.14.4, and AGP 8.10.0. The public API
-(`com.tbruyelle.rxpermissions3` package, method signatures) is unchanged from the upstream project.
+This is the `pvp-technologies/RxPermissions` fork of [tbruyelle/RxPermissions](https://github.com/tbruyelle/RxPermissions)
+(previously published from `Caplord/RxPermissions`), modernized for Java 21, `compileSdk`/`targetSdk` 36,
+Gradle 8.14.4, and AGP 8.10.0. The public API (`com.tbruyelle.rxpermissions3` package, method signatures)
+is unchanged from the upstream project.
 
 ## Setup
 
@@ -21,7 +22,7 @@ allprojects {
 }
 
 dependencies {
-    implementation 'com.github.caplord:rxpermissions:1.0.4-java21'
+    implementation 'com.github.pvp-technologies:rxpermissions:1.0.4-java21'
 }
 ```
 
