@@ -1,5 +1,10 @@
 # RxPermissions
 
+> **This repository has moved.** RxPermissions is now published from
+> [pvp-technologies/RxPermissions](https://github.com/pvp-technologies/RxPermissions) under the JitPack
+> coordinate `com.github.pvp-technologies:rxpermissions`. Please update your dependencies to point there;
+> this repository is no longer maintained.
+
 [![](https://jitpack.io/v/pvp-technologies/RxPermissions.svg)](https://jitpack.io/#pvp-technologies/RxPermissions)
 
 This library allows the usage of RxJava with the new Android M permission model.
