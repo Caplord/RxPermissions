@@ -1,12 +1,16 @@
 # RxPermissions
 
-[![](https://jitpack.io/v/tbruyelle/RxPermissions.svg)](https://jitpack.io/#tbruyelle/RxPermissions) [![BuildVersion](https://buildstats.info/nuget/RxPermissions)](https://www.nuget.org/packages/RxPermissions/) [![Build Status](https://api.travis-ci.org/tbruyelle/RxPermissions.svg?branch=master)](https://travis-ci.org/tbruyelle/RxPermissions)
+[![](https://jitpack.io/v/Caplord/RxPermissions.svg)](https://jitpack.io/#Caplord/RxPermissions)
 
 This library allows the usage of RxJava with the new Android M permission model.
 
+This is the `Caplord/RxPermissions` fork of [tbruyelle/RxPermissions](https://github.com/tbruyelle/RxPermissions),
+modernized for Java 21, `compileSdk`/`targetSdk` 36, Gradle 8.14.4, and AGP 8.10.0. The public API
+(`com.tbruyelle.rxpermissions3` package, method signatures) is unchanged from the upstream project.
+
 ## Setup
 
-To use this library your `minSdkVersion` must be >= 14.
+To use this library your `minSdkVersion` must be >= 26.
 
 ```gradle
 allprojects {
@@ -17,7 +21,7 @@ allprojects {
 }
 
 dependencies {
-    implementation 'com.github.tbruyelle:rxpermissions:0.12'
+    implementation 'com.github.caplord:rxpermissions:1.0.4-java21'
 }
 ```
 
@@ -129,8 +133,8 @@ You can find more details about that [here](https://github.com/tbruyelle/RxPermi
 
 ## Status
 
-This library is still beta, so contributions are welcome.
-I'm currently using it in production since months without issue.
+This fork is used in production by the OpenFleet Android app. See `AGENTS.md` for build, test, and
+release guidance.
 
 ## Benefits
 
